@@ -12,8 +12,6 @@
 
 - explore: candidates
 
-- explore: dim_age
-
 - explore: dim_annual_salary_range
 
 - explore: dim_app_source
