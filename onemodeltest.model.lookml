@@ -44,6 +44,9 @@
   joins:
     - join: dim_gender
       foreign_key: gender
+    
+    - join: dim_org_unit
+      foreign_key: department
 
 - explore: employee_event
   joins:
