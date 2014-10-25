@@ -1,15 +1,39 @@
 - connection: onemodel_redshift
 
-- scoping: true           # for backward compatibility
-- include: "*.view"       # include all views in this project
-- include: "*.dashboard"  # include all dashboards in this project
+- scoping: true                  # for backward compatibility
+- include: "*.view.lookml"       # include all the views
+- include: "*.dashboard.lookml"  # include all the dashboards
 
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# - base_view: order_items
-#   joins:
-#     - join: orders
-#       foreign_key: order_id
-#     - join: users
-#       foreign_key: orders.user_id
+- explore: employee
+  joins:
+    - join: dim_gender
+      foreign_key: gender
+    
+    - join: dim_org_unit
+      foreign_key: department
+      
+    - join: dim_performance_rating
+      foreign_key: performancerating
+
+- explore: employee_event
+  joins:
+  
+    - join: employee
+      foreign_key: wkfid
+      
+    - join: dim_event_reason
+      foreign_key: eventreason
+      
+
+- explore: employee_qoh
+
+- explore: performance
+
+- explore: timeperiods
+
+- explore: view_employee_event_denormal
+
+- explore: view_employee_timeperiods_day_denormal
+
+- explore: view_performance_denormal
+

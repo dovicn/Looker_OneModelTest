@@ -108,6 +108,10 @@
   - dimension: iseodrecord
     type: yesno
     sql: ${TABLE}.iseodrecord
+  
+  - dimension: iseom
+    type: yesno
+    sql: ${TABLE}.iseom
 
   - dimension: ismanager
     type: yesno
@@ -211,4 +215,17 @@
   - measure: count
     type: count
     drill_fields: [fullname, firstname, lastname]
+  
+  - measure: headcount_sum
+    type: sum
+    sql: ${TABLE}.headcount
+    
+  - measure: headcount_eom
+    type: sum
+    sql: ${TABLE}.headcount
+    filters:
+      iseom: yes
 
+  - measure: headcount_avg
+    type: avg
+    sql: ${headcount_sum}

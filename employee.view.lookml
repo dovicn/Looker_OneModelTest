@@ -185,6 +185,7 @@
 
   - dimension: wkfid
     type: int
+    primarykey: true
     sql: ${TABLE}.wkfid
 
   - dimension: zip
@@ -193,4 +194,9 @@
   - measure: count
     type: count
     drill_fields: [fullname, firstname, lastname]
+    
+  - measure: headcount_sum
+    type: sum
+    sql: ${TABLE}.headcount
+    drill_fields: [personid, fullname, firstname, lastname]
 
