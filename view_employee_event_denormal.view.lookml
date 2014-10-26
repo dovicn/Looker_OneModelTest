@@ -1,5 +1,5 @@
-- view: view_employee_timeperiods_day_denormal
-  sql_table_name: one.view_employee_timeperiods_day_denormal
+- view: view_employee_event_denormal
+  sql_table_name: one.view_employee_event_denormal
   fields:
 
   - dimension: age
@@ -71,13 +71,37 @@
 
   - dimension: ethnicgroup
     sql: ${TABLE}.ethnicgroup
-
+    
+  - dimension: event
+    sql: ${TABLE}.event
+    
+  - dimension_group: eventdate
+    type: time
+    timeframes: [date, week, month]
+    convert_tz: false
+    sql: ${TABLE}.eventdate
+    
+  - dimension: eventdescr
+    sql: ${TABLE}.eventdescr
+    
+  - dimension: eventoccurrence
+    type: int
+    sql: ${TABLE}.eventoccurrence
+    
+  - dimension: eventreason
+    sql: ${TABLE}.eventreason
+    
+  - dimension: eventreasondescr
+    sql: ${TABLE}.eventreasondescr
+    
+  - dimension: eventstatus
+    sql: ${TABLE}.eventstatus
+    
+  - dimension: eventtype
+    sql: ${TABLE}.eventtype
+    
   - dimension: firstname
     sql: ${TABLE}.firstname
-
-  - dimension: fte
-    type: number
-    sql: ${TABLE}.fte
 
   - dimension: fullname
     sql: ${TABLE}.fullname
@@ -87,10 +111,6 @@
 
   - dimension: gender
     sql: ${TABLE}.gender
-
-  - dimension: headcount
-    type: int
-    sql: ${TABLE}.headcount
 
   - dimension_group: hiredate
     type: time
@@ -108,15 +128,15 @@
   - dimension: iseodrecord
     type: yesno
     sql: ${TABLE}.iseodrecord
-  
-  - dimension: iseom
-    type: yesno
-    sql: ${TABLE}.iseom
 
   - dimension: ismanager
     type: yesno
     sql: ${TABLE}.ismanager
-
+  
+  - dimension: isprimaryevent
+    type: yesno
+    sql: ${TABLE}.isprimaryevent
+    
   - dimension: jobfamily
     sql: ${TABLE}.jobfamily
 
@@ -189,21 +209,11 @@
   - dimension: status
     sql: ${TABLE}.status
 
-  - dimension: tenure_months
-    type: number
-    sql: ${TABLE}.tenure_months
-
   - dimension_group: tenuredate
     type: time
     timeframes: [date, week, month]
     convert_tz: false
     sql: ${TABLE}.tenuredate
-
-  - dimension_group: todate
-    type: time
-    timeframes: [date, week, month]
-    convert_tz: false
-    sql: ${TABLE}.todate
 
   - dimension: wkfid
     type: int
