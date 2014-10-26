@@ -2,12 +2,20 @@
   sql_table_name: one.view_employee_event_denormal
   fields:
 
+  - dimension: age
+    type: number
+    sql: ${TABLE}.age
+
   - dimension: annualsalary
     type: number
     sql: ${TABLE}.annualsalary
 
   - dimension: annualsalaryrange
     sql: ${TABLE}.annualsalaryrange
+
+  - dimension: birthday_count
+    type: int
+    sql: ${TABLE}.birthday_count
 
   - dimension: bonus
     type: number
@@ -63,32 +71,35 @@
 
   - dimension: ethnicgroup
     sql: ${TABLE}.ethnicgroup
-
+    
   - dimension: event
     sql: ${TABLE}.event
-
+    
   - dimension_group: eventdate
     type: time
     timeframes: [date, week, month]
     convert_tz: false
     sql: ${TABLE}.eventdate
-
+    
   - dimension: eventdescr
     sql: ${TABLE}.eventdescr
-
+    
   - dimension: eventoccurrence
     type: int
     sql: ${TABLE}.eventoccurrence
-
+    
   - dimension: eventreason
     sql: ${TABLE}.eventreason
-
+    
   - dimension: eventreasondescr
     sql: ${TABLE}.eventreasondescr
-
+    
   - dimension: eventstatus
     sql: ${TABLE}.eventstatus
-
+    
+  - dimension: eventtype
+    sql: ${TABLE}.eventtype
+    
   - dimension: firstname
     sql: ${TABLE}.firstname
 
@@ -121,11 +132,11 @@
   - dimension: ismanager
     type: yesno
     sql: ${TABLE}.ismanager
-
+  
   - dimension: isprimaryevent
     type: yesno
     sql: ${TABLE}.isprimaryevent
-
+    
   - dimension: jobfamily
     sql: ${TABLE}.jobfamily
 
@@ -214,4 +225,17 @@
   - measure: count
     type: count
     drill_fields: [fullname, firstname, lastname]
+  
+  - measure: headcount_sum
+    type: sum
+    sql: ${TABLE}.headcount
+    
+  - measure: headcount_eom
+    type: sum
+    sql: ${TABLE}.headcount
+    filters:
+      iseom: yes
 
+  - measure: headcount_avg
+    type: avg
+    sql: ${headcount_sum}
