@@ -226,16 +226,18 @@
     type: count
     drill_fields: [fullname, firstname, lastname]
   
-  - measure: headcount_sum
+  - measure: hires
     type: sum
-    sql: ${TABLE}.headcount
-    
-  - measure: headcount_eom
-    type: sum
-    sql: ${TABLE}.headcount
+    sql: ${TABLE}.eventoccurrence
     filters:
-      iseom: yes
+      eventtype: 'Hire'
+    
+  - measure: terminations
+    type: sum
+    sql: ${TABLE}.eventoccurrence
+    filters:
+      eventtype: '%Termination%'
 
-  - measure: headcount_avg
-    type: avg
-    sql: ${headcount_sum}
+  - measure: movements
+    type: sum
+    sql: ${TABLE}.eventoccurrence
