@@ -185,7 +185,7 @@
 
   - dimension: wkfid
     type: int
-    primarykey: true
+    primary_key: true
     sql: ${TABLE}.wkfid
 
   - dimension: zip
