@@ -149,7 +149,7 @@
 
   - dimension: personid
     sql: ${TABLE}.personid
-
+    
   - dimension: personrcdrank
     type: int
     sql: ${TABLE}.personrcdrank
@@ -198,13 +198,13 @@
     timeframes: [date, week, month]
     convert_tz: false
     sql: ${TABLE}.tenuredate
-
+    
   - dimension_group: todate
     type: time
     timeframes: [date, week, month]
     convert_tz: false
     sql: ${TABLE}.todate
-
+    
   - dimension: wkfid
     type: int
     sql: ${TABLE}.wkfid
@@ -229,3 +229,16 @@
   - measure: headcount_avg
     type: avg
     sql: ${headcount_sum}
+  
+  # DW - Testing some daily aggregation
+  - measure: base_fte
+    type: sum
+    sql: ${TABLE}.fte
+  
+  - measure: days_so_far
+    type: count_distinct
+    sql: ${TABLE}.todate
+  
+  - measure: full_time_equivlent
+    type: number
+    sql: ${base_fte} / ${days_so_far}
