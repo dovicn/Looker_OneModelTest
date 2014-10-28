@@ -28,3 +28,18 @@
     x_axis_label_rotation: -45
     y_axis_labels: ['FTE']
     limit: 500
+
+  - name: fte_and_avgHc
+    title: Average Headcount and FTE
+    type: looker_column
+    base_view: view_employee_timeperiods_day_denormal
+    dimensions: [view_employee_timeperiods_day_denormal.todate_month]
+    measures: [view_employee_timeperiods_day_denormal.average_hc, view_employee_timeperiods_day_denormal.full_time_equivlent]
+    listen:
+      date: view_employee_timeperiods_day_denormal.todate_date
+    filters:
+      view_employee_timeperiods_day_denormal.todate_date: 12 months
+    sorts: [view_employee_timeperiods_day_denormal.todate_month]
+    limit: 500
+    show_null_labels: false
+    stacking: ''
