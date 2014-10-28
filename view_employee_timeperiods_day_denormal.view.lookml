@@ -229,6 +229,8 @@
   - measure: headcount_avg
     type: avg
     sql: ${headcount_sum}
+    
+    
   
   # DW - Testing some daily aggregation
   - measure: base_fte
@@ -242,3 +244,7 @@
   - measure: full_time_equivlent
     type: number
     sql: ${base_fte} / ${days_so_far}
+    
+  - measure: average_hc
+    type: number
+    sql: ${headcount_sum} / ${days_so_far}

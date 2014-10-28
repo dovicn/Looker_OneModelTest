@@ -69,3 +69,7 @@
   - measure: eventoccurrence
     type: sum
     sql: ${TABLE}.eventoccurrence
+    
+  - measure: eventoccurrencerate
+    type: number
+    sql: ${eventoccurrence} / ${view_employee_timeperiods_day_denormal.average_hc}
