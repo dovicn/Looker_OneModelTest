@@ -204,6 +204,14 @@
     timeframes: [date, week, month]
     convert_tz: false
     sql: ${TABLE}.todate
+  
+#   - dimension_group: todate
+#     type: time
+#     timeframes: [year]
+#     convert_tz: false
+#     sql: ${TABLE}.todate
+#     html:                   Idea is to hack together a year -> month drillpath
+  
     
   - dimension: wkfid
     type: int

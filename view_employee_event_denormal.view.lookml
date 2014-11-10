@@ -237,7 +237,13 @@
     sql: ${TABLE}.eventoccurrence
     filters:
       eventtype: '%Termination%'
+      
+
+    
 
   - measure: movements
     type: sum
     sql: ${TABLE}.eventoccurrence
+    
+    
+    

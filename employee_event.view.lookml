@@ -65,11 +65,30 @@
   - measure: count
     type: count
     drill_fields: []
+  
+    
+  - measure: cumulative_hires
+    type: number
+    sql: |
+      SUM(CASE WHEN ${dim_event_reason.level1desc} = 'Hire'
+              THEN 1 ELSE 0 END) 
+      OVER (order by ${employee_event.effdt_date} rows unbounded preceding)  
+
+  - measure: cumulative_terminations
+    type: number
+    sql: |
+      SUM(CASE WHEN ${dim_event_reason.level1desc} LIKE '%Termination%'
+              THEN 1 ELSE 0 END) 
+      OVER (order by ${employee_event.effdt_date} rows unbounded preceding)  
+      
+  - measure: current_headcount
+    type: number
+    sql: ${cumulative_hires} - ${cumulative_terminations}
     
   - measure: eventoccurrence
     type: sum
     sql: ${TABLE}.eventoccurrence
     
-  - measure: eventoccurrencerate
+  - measure: event_occurrence_rate
     type: number
     sql: ${eventoccurrence} / ${view_employee_timeperiods_day_denormal.average_hc}

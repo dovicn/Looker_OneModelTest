@@ -69,6 +69,7 @@
 
   - dimension: fte
     type: number
+    decimals: 1
     sql: ${TABLE}.fte
 
   - dimension: fullname

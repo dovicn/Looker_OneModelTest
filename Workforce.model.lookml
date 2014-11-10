@@ -24,6 +24,9 @@
     - join: dim_event_reason
       foreign_key: eventreason
       
+    - join: view_employee_timeperiods_day_denormal
+      foreign_key: wkfid
+      
 
 - explore: employee_qoh
 
