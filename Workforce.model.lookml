@@ -76,3 +76,16 @@
 
 - explore: view_performance_denormal
 
+- explore: measures_base
+  joins:
+    - join: dim_gender
+      foreign_key: gender
+    
+    - join: dim_org_unit
+      foreign_key: department
+      
+    - join: dim_performance_rating
+      foreign_key: performance_rating
+    
+    - join: dim_event_reason
+      foreign_key: event_reason_id
