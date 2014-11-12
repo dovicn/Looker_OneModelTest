@@ -1,5 +1,65 @@
-- view: view_employee_timeperiods_day_denormal
-  sql_table_name: one.view_employee_timeperiods_day_denormal
+- view: measures_employee_daily
+  derived_table:
+    sql: |
+      SELECT emp.personid as person_id
+      , timeperiods.date AS todate
+      , CAST(timeperiods.year as VARCHAR) + CAST(timeperiods.month as VARCHAR) as timeperiod
+      , emp.status
+      , emp.fullname
+      , emp.firstname
+      , emp.lastname
+      , date_diff('years', emp.dob, timeperiods.date) AS age
+      , date_diff('months', emp.hiredate, timeperiods.date) AS tenure_months
+      , CASE WHEN datepart(month, emp.dob) = datepart(month, timeperiods.date) AND datepart(day, emp.dob) = datepart(day, timeperiods.date) THEN 1 ELSE 0 END AS birthday_count
+      , emp.dob
+      , emp.gender
+      , emp.nationality
+      , emp.ethnicgroup as ethnic_group
+      , emp.eeojob as eeo_job
+      , emp.hiredate as hire_date
+      , emp.tenuredate as tenure_date
+      , emp.email
+      , emp.phone
+      , emp.salutation
+      , emp.country
+      , emp.state
+      , emp.city
+      , emp.building
+      , emp."level"
+      , emp.zip
+      , emp.department
+      , emp.costcenter
+      , emp.positionid as position_id
+      , emp.jobid as job_id
+      , emp.jobfamily as job_family
+      , emp.jobfunction as job_function
+      , emp.critical
+      , emp.manager
+      , emp.matrixmanager as matrix_manager
+      , emp.annualsalary as annual_salary
+      , emp.annualsalaryrange as annual_salary_range
+      , emp.bonus
+      , emp.hourlyrate as hourly_rate
+      , emp.performancerating as performance_rating
+      , emp.prevperfrating as prev_perf_rating
+      , emp.nineboxrating as ninebox_rating
+      , emp.emptype as emp_type
+      , emp.regtemp as reg_temp
+      , emp.fullpart as full_part
+      , emp.contractor
+      , emp.riskofloss as risk_of_loss
+      , emp.impactofloss as impact_of_loss
+      , emp.ismanager as is_manager
+      
+      , emp.headcount 
+      , emp.fte
+      
+      FROM one.employee emp
+      INNER JOIN one.timeperiods 
+      ON emp.effdt <= timeperiods.date 
+      AND emp.enddt >= timeperiods.date 
+      AND emp.headcount = 1
+
   fields:
 
   - dimension: age
@@ -105,14 +165,6 @@
   - dimension: impactofloss
     sql: ${TABLE}.impactofloss
 
-  - dimension: iseodrecord
-    type: yesno
-    sql: ${TABLE}.iseodrecord
-  
-  - dimension: iseom
-    type: yesno
-    sql: ${TABLE}.iseom
-
   - dimension: ismanager
     type: yesno
     sql: ${TABLE}.ismanager
@@ -189,7 +241,7 @@
   - dimension: status
     sql: ${TABLE}.status
 
-  - dimension: tenure_months
+  - dimension: organization_tenure
     type: number
     sql: ${TABLE}.tenure_months
 
@@ -204,15 +256,15 @@
     timeframes: [date, week, month]
     convert_tz: false
     sql: ${TABLE}.todate
-  
+
+
 #   - dimension_group: todate
 #     type: time
 #     timeframes: [year]
 #     convert_tz: false
 #     sql: ${TABLE}.todate
 #     html:                   Idea is to hack together a year -> month drillpath
-  
-    
+
   - dimension: wkfid
     type: int
     sql: ${TABLE}.wkfid
@@ -220,39 +272,60 @@
   - dimension: zip
     sql: ${TABLE}.zip
 
-  - measure: count
-    type: count
-    drill_fields: [fullname, firstname, lastname]
-  
-  - measure: headcount_sum
-    type: sum
-    sql: ${TABLE}.headcount
-    
-  - measure: headcount_eom
-    type: sum
-    sql: ${TABLE}.headcount
-    filters:
-      iseom: yes
 
-  - measure: headcount_avg
-    type: avg
-    sql: ${headcount_sum}
-    
-    
-  
-  # DW - Testing some daily aggregation
-  - measure: base_fte
+### Core daily metrics  
+  - measure: headcount_daily
     type: sum
-    sql: ${TABLE}.fte
+    sql: ${headcount}
+
+  - measure: average_age_daily
+    type: average
+    sql: ${age}
   
-  - measure: days_so_far
-    type: count_distinct
-    sql: ${TABLE}.todate
-  
-  - measure: full_time_equivlent
-    type: number
-    sql: ${base_fte} / ${days_so_far}
+  - measure: average_tenure_daily
+    type: average
+    sql: 1.0 * ${organization_tenure} / 12
     
-  - measure: average_hc
+  - measure: headcount_daily_male
+    type: sum
+    sql: ${headcount}
+    filters:
+      gender: 1
+  
+  - measure: headcount_daily_female
+    type: sum
+    sql: ${headcount}
+    filters:
+      gender: 2
+  
+  - measure: male_to_female_staffing_ratio
     type: number
-    sql: ${headcount_sum} / ${days_so_far}
+    sql: 1.00 * ${headcount_daily_male} / NULLIF(${headcount_daily_female}, 0)
+    decimals: 2
+    
+  - measure: staffing_rate_male
+    type: number
+    sql: 100.00 * ${headcount_daily_male} / NULLIF(${headcount_daily}, 0)
+    format: "%5.2f%%"
+  
+  - measure: staffing_rate_female
+    type: number
+    sql: 100.00 * ${headcount_daily_female} / NULLIF(${headcount_daily}, 0)
+    format: "%5.2f%%"
+
+  # DW - Testing some daily aggregation
+#  - measure: base_fte
+#    type: sum
+#    sql: ${TABLE}.fte
+#  
+#  - measure: days_so_far
+#    type: count_distinct
+#    sql: ${TABLE}.todate
+#  
+#  - measure: full_time_equivlent
+#    type: number
+#    sql: ${base_fte} / ${days_so_far}
+#    
+#  - measure: average_hc
+#    type: number
+#    sql: ${headcount_sum} / ${days_so_far}

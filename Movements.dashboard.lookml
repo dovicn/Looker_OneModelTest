@@ -12,80 +12,151 @@
 
   elements:
   
-  - name: hiress_over_time
-    title: Hires
+  - name: upward_mobility
+    title: Upward Mobility
     type: looker_column
-    base_view: view_employee_event_denormal
-    dimensions: [dim_event_reason.level1desc, view_employee_event_denormal.effdt_month]
-    pivots: [dim_event_reason.level1desc]
-    measures: [view_employee_event_denormal.hires]
+    base_view: measures_base
+    dimensions: [measures_base.todate_month]
+    measures: [measures_base.upward_mobility]
     listen:
-      date: view_employee_event_denormal.effdt_date
-    sorts: [view_employee_event_denormal.effdt_month asc]
+      date: measures_base.todate_date
+    sorts: [measures_base.todate_month asc]
     limit: 500
-    show_null_labels: false
     stacking: normal
+    hide_legend: true
+    show_null_labels: false
+    show_null_points: false
     x_axis_label_rotation: -45
-    y_axis_labels: ['Hires']
-
-  - name: terminations_over_time
-    title: Terminations
+    y_axis_labels: ['Upward Mobility']
+    hide_legend: true
+  
+  - name: lateral_mobility
+    title: Lateral Mobility
     type: looker_column
-    base_view: view_employee_event_denormal
-    dimensions: [dim_event_reason.level1desc, view_employee_event_denormal.effdt_month]
-    pivots: [dim_event_reason.level1desc]
-    measures: [view_employee_event_denormal.terminations]
+    base_view: measures_base
+    dimensions: [measures_base.todate_month]
+    measures: [measures_base.lateral_mobility]
     listen:
-      date: view_employee_event_denormal.effdt_date
-    sorts: [view_employee_event_denormal.effdt_month asc]
+      date: measures_base.todate_date
+    sorts: [measures_base.todate_month asc]
     limit: 500
-    show_null_labels: false
     stacking: normal
+    hide_legend: true
+    show_null_labels: false
+    show_null_points: false
     x_axis_label_rotation: -45
-    y_axis_labels: ['Terminations']
-
-  - name: movements_over_time
-    title: Movements
+    y_axis_labels: ['Lateral Mobility']
+    hide_legend: true
+  
+  - name: transfers
+    title: Transfers
     type: looker_column
-    base_view: view_employee_event_denormal
-    dimensions: [dim_event_reason.level1desc, view_employee_event_denormal.effdt_month]
-    pivots: [dim_event_reason.level1desc]
-    measures: [view_employee_event_denormal.movements]
+    base_view: measures_base
+    dimensions: [measures_base.todate_month, dim_event_reason.level2desc]
+    pivots: [dim_event_reason.level2desc]
+    measures: [measures_base.transfers]
     listen:
-      date: view_employee_event_denormal.effdt_date
-    sorts: [view_employee_event_denormal.effdt_month asc]
+      date: measures_base.todate_date
+    sorts: [measures_base.todate_month asc]
     limit: 500
-    show_null_labels: false
     stacking: normal
+    hide_legend: true
+    show_null_labels: false
+    show_null_points: false
     x_axis_label_rotation: -45
-    y_axis_labels: ['Movements']
-
-  - name: internal_movements_over_time
-    title: Internal Movements
+    y_axis_labels: ['Transfers']
+    hide_legend: true
+    
+  - name: transfer_rate
+    title: Transfer Rate
     type: looker_column
-    base_view: view_employee_event_denormal
-    dimensions: [dim_event_reason.level1desc, view_employee_event_denormal.effdt_month]
-    pivots: [dim_event_reason.level1desc]
-    measures: [view_employee_event_denormal.movements]
-    filters:
-      dim_event_reason.level1desc: -"Hire", -"Voluntary Termination", -"Involuntary Termination", -"Other Terminations"
+    base_view: measures_base
+    dimensions: [measures_base.todate_month]
+    measures: [measures_base.transfer_rate]
     listen:
-      date: view_employee_event_denormal.effdt_date
-    sorts: [view_employee_event_denormal.effdt_month asc]
+      date: measures_base.todate_date
+    sorts: [measures_base.todate_month asc]
     limit: 500
-    show_null_labels: false
     stacking: normal
-    x_axis_label_rotation: -45
-    y_axis_labels: ['Internal Movements']
-
-  - name: total_events
-    title: Total Events
-    type: single_value
-    base_view: view_employee_event_denormal
-    measures: [view_employee_event_denormal.movements]
-    listen:
-      date: view_employee_event_denormal.effdt_date
-    sorts: [view_employee_event_denormal.movements desc]
+    hide_legend: true
     show_null_labels: false
-    width: 4
-    height: 2
+    show_null_points: false
+    x_axis_label_rotation: -45
+    y_axis_labels: ['Transfer Rate']
+    hide_legend: true
+    
+  - name: promotions
+    title: Promotions
+    type: looker_column
+    base_view: measures_base
+    dimensions: [measures_base.todate_month, dim_event_reason.level2desc]
+    pivots: [dim_event_reason.level2desc]
+    measures: [measures_base.promotions]
+    listen:
+      date: measures_base.todate_date
+    sorts: [measures_base.todate_month asc]
+    limit: 500
+    stacking: normal
+    hide_legend: true
+    show_null_labels: false
+    show_null_points: false
+    x_axis_label_rotation: -45
+    y_axis_labels: ['Promotions']
+    hide_legend: true
+    
+  - name: promotion_rate
+    title: Promotion Rate
+    type: looker_column
+    base_view: measures_base
+    dimensions: [measures_base.todate_month]
+    measures: [measures_base.promotion_rate]
+    listen:
+      date: measures_base.todate_date
+    sorts: [measures_base.todate_month asc]
+    limit: 500
+    stacking: normal
+    hide_legend: true
+    show_null_labels: false
+    show_null_points: false
+    x_axis_label_rotation: -45
+    y_axis_labels: ['Promotion Rate']
+    hide_legend: true
+    
+  - name: demotions
+    title: Demotions
+    type: looker_column
+    base_view: measures_base
+    dimensions: [measures_base.todate_month, dim_event_reason.level2desc]
+    pivots: [dim_event_reason.level2desc]
+    measures: [measures_base.demotions]
+    listen:
+      date: measures_base.todate_date
+    sorts: [measures_base.todate_month asc]
+    limit: 500
+    stacking: normal
+    hide_legend: true
+    show_null_labels: false
+    show_null_points: false
+    x_axis_label_rotation: -45
+    y_axis_labels: ['Demotions']
+    hide_legend: true
+    
+  - name: demotion_rate
+    title: Demotion Rate
+    type: looker_column
+    base_view: measures_base
+    dimensions: [measures_base.todate_month]
+    measures: [measures_base.demotion_rate]
+    listen:
+      date: measures_base.todate_date
+    sorts: [measures_base.todate_month asc]
+    limit: 500
+    stacking: normal
+    hide_legend: true
+    show_null_labels: false
+    show_null_points: false
+    x_axis_label_rotation: -45
+    y_axis_labels: ['Demotion Rate']
+    hide_legend: true
+    
+  
