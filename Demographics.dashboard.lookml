@@ -85,8 +85,6 @@
     stacking: ''
     show_null_labels: false
     show_null_points: false
-    reference_lines:
-      - value: mean
     x_axis_label_rotation: -45
     y_axis_labels: ['End of Month Headcount']
     hide_legend: true
