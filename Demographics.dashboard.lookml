@@ -114,14 +114,14 @@
 
 
   - name: world_headcount_map
-    title: End of Month Headcount
+    title: Headcount - Today
     type: looker_geo_choropleth
-    base_view: measures_base
+    base_view: measures_employee_daily
     dimensions: [dim_country.level1desc]
-    measures: [measures_base.end_of_month_headcount]
+    measures: [measures_employee_daily.headcount_daily]
     filters:
-      measures_base.todate_date: 1 months
-    sorts: [measures_base.end_of_month_headcount desc]
+      measures_employee_daily.todate_date: today
+    sorts: [measures_employee_daily.headcount_daily desc]
     limit: 500
     show_null_labels: false
     quantize_colors: false

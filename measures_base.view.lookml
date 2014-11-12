@@ -121,7 +121,7 @@
       type: sum
       sql: ${eom_hc}
       filters:
-        age: '>55'
+        age: '>42'
     
     - measure: staffing_rate_approaching_retirement_eligiblity
       type: number
