@@ -105,31 +105,42 @@
       filters:
         eom_hc: 1
     
-    - measure: end_of_month_headcount_male
+    - measure: eom_headcount_male
       type: sum
       sql: ${eom_hc}
       filters:
         gender: 1
     
-    - measure: end_of_month_headcount_female
+    - measure: eom_headcount_female
       type: sum
       sql: ${eom_hc}
       filters:
         gender: 2
     
+    - measure: eom_headcount_approaching_retirement_eligiblity
+      type: sum
+      sql: ${eom_hc}
+      filters:
+        age: '>55'
+    
+    - measure: staffing_rate_approaching_retirement_eligiblity
+      type: number
+      sql: 100.00 * ${eom_headcount_approaching_retirement_eligiblity} / NULLIF(${end_of_month_headcount}, 0)
+      format: "%5.2f%%"
+    
     - measure: staffing_rate_male
       type: number
-      sql: 100.00 * ${end_of_month_headcount_male} / NULLIF(${end_of_month_headcount}, 0)
+      sql: 100.00 * ${eom_headcount_male} / NULLIF(${end_of_month_headcount}, 0)
       format: "%5.2f%%"
     
     - measure: staffing_rate_female
       type: number
-      sql: 100.00 * ${end_of_month_headcount_female} / NULLIF(${end_of_month_headcount}, 0)
+      sql: 100.00 * ${eom_headcount_female} / NULLIF(${end_of_month_headcount}, 0)
       format: "%5.2f%%"
     
     - measure: male_to_female_staffing_ratio
       type: number
-      sql: 1.00 * ${end_of_month_headcount_male} / NULLIF(${end_of_month_headcount_female}, 0)
+      sql: 1.00 * ${eom_headcount_male} / NULLIF(${eom_headcount_female}, 0)
       decimals: 2
     
 ### Mobility Section

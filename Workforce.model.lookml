@@ -39,6 +39,9 @@
     - join: dim_gender
       foreign_key: gender
     
+    - join: dim_country
+      foreign_key: country
+    
     - join: dim_org_unit
       foreign_key: department
       
@@ -49,6 +52,9 @@
   joins:
     - join: dim_gender
       foreign_key: gender
+      
+    - join: dim_country
+      foreign_key: country
     
     - join: dim_org_unit
       foreign_key: department
