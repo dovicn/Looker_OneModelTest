@@ -75,6 +75,42 @@
     - dimension: event_occurrence
       type: int
       sql: ${TABLE}.event_occurrence
+    
+    - dimension: requisition_status
+      type: string
+      sql: ${TABLE}.req_status
+    
+    - dimension: application_source
+      type: string
+      sql: ${TABLE}.application_source
+      
+    - dimension: application_status
+      type: string
+      sql: ${TABLE}.application_status
+    
+    - dimension: education_level
+      type: string
+      sql: ${TABLE}.educationlevel
+    
+    - dimension: application_id
+      type: string
+      sql: ${TABLE}.applicationid
+      
+    - dimension: candidate_id
+      type: string
+      sql: ${TABLE}.candidateid
+    
+    - dimension: requisition_id
+      type: string
+      sql: ${TABLE}.reqid
+    
+    - dimension: application_occurrence
+      type: int
+      sql: ${TABLE}.application_occurrence
+    
+    - dimension: applications
+      type: string
+      sql: ${TABLE}.applications
 
 ### Headcount Section
     - measure: average_headcount
@@ -229,3 +265,45 @@
       type: number
       sql: 1.00 * ${hires} / NULLIF(${terminations}, 0)
       decimals: 2
+      
+      
+## Recruitment Section
+### Applications
+    - measure: application_occurrences
+      type: sum
+      sql: ${application_occurrence}
+    
+    - measure: hires_staffing
+      type: sum
+      sql: ${application_occurrence}
+      filters:
+        application_status: 'Hired'
+    
+    - measure: total_interviews
+      type: sum
+      sql: ${application_occurrence}
+      filters:
+        application_status: 'Interview'
+    
+    - measure: offers_made
+      type: sum
+      sql: ${application_occurrence}
+      filters:
+        application_status: 'Offer'
+    
+    - measure: offers_accepted
+      type: sum
+      sql: ${application_occurrence}
+      filters:
+        application_status: 'Offer Accepted'
+    
+    - measure: offers_declined
+      type: sum
+      sql: ${application_occurrence}
+      filters:
+        application_status: 'Offer Rejected'
+    
+    - measure: number_of_applications
+      type: count_distinct
+      sql: ${applications}
+
