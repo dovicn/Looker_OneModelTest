@@ -12,8 +12,34 @@
 
   elements:
   
+  - name: total_applications
+    title: Number of Applications
+    type: single_value
+    base_view: measures_base
+    measures: [measures_base.candidate_applied]
+    listen:
+      date: measures_base.todate_date
+    sorts: [measures_base.candidate_applied desc]
+    limit: 500
+    show_null_labels: false
+    width: 3
+    height: 2
+    
+  - name: candidate_rejected
+    title: Number of Candidates Rejected
+    type: single_value
+    base_view: measures_base
+    measures: [measures_base.candidate_rejected]
+    listen:
+      date: measures_base.todate_date
+    sorts: [measures_base.candidate_rejected desc]
+    limit: 500
+    show_null_labels: false
+    width: 3
+    height: 2
+  
   - name: total_interviews
-    title: Total Interviews
+    title: Number of Candidates Interviewed
     type: single_value
     base_view: measures_base
     measures: [measures_base.total_interviews]
@@ -39,7 +65,7 @@
     height: 2
   
   - name: offers_made
-    title: Offers Made
+    title: Number of Offers Made
     type: single_value
     base_view: measures_base
     measures: [measures_base.offers_made]
@@ -52,7 +78,7 @@
     height: 2
   
   - name: offers_accepted
-    title: Offers Accepted
+    title: Number of Offers Accepted
     type: single_value
     base_view: measures_base
     measures: [measures_base.offers_accepted]
@@ -65,7 +91,7 @@
     height: 2
     
   - name: offers_declined
-    title: Offers Declined
+    title: Number of Offers Declined
     type: single_value
     base_view: measures_base
     measures: [measures_base.offers_declined]

@@ -340,6 +340,18 @@
       filters:
         application_status: 'Offer Rejected'
     
+    - measure: candidate_applied
+      type: sum
+      sql: ${application_occurrence}
+      filters:
+        application_status: 'Applied'
+    
+    - measure: candidate_rejected
+      type: sum
+      sql: ${application_occurrence}
+      filters:
+        application_status: 'Rejected'
+    
     - measure: number_of_applications
       type: count_distinct
       sql: ${applications}
