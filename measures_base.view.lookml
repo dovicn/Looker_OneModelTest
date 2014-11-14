@@ -111,6 +111,26 @@
     - dimension: applications
       type: string
       sql: ${TABLE}.applications
+    
+    - dimension: candidates
+      type: string
+      sql: ${TABLE}.candidates
+      
+    - dimension: requisitions
+      type: string
+      sql: ${TABLE}.requisitions
+
+    - dimension: review_occurrence
+      type: int
+      sql: ${TABLE}.review_occurrence
+    
+    - dimension: review_type
+      type: string
+      sql: ${TABLE}.review_type
+      
+    - dimension: prev_perf_rating_same_review_type
+      type: string
+      sql: ${TABLE}.prev_perf_rating_same_review_type
 
 ### Headcount Section
     - measure: average_headcount
@@ -307,3 +327,18 @@
       type: count_distinct
       sql: ${applications}
 
+### Candidates
+    - measure: number_of_candidates
+      type: count_distinct
+      sql: ${candidates}
+
+### Requisitions
+    - measure: number_of_requisitions
+      type: count_distinct
+      sql: ${requisitions}
+    
+    
+## Performance Section
+    - measure: review_occurrences
+      type: sum
+      sql: ${review_occurrence}
