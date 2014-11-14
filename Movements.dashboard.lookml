@@ -23,7 +23,6 @@
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: normal
-    hide_legend: true
     show_null_labels: false
     show_null_points: false
     x_axis_label_rotation: -45
@@ -41,7 +40,6 @@
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: normal
-    hide_legend: true
     show_null_labels: false
     show_null_points: false
     x_axis_label_rotation: -45
@@ -60,7 +58,6 @@
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: normal
-    hide_legend: true
     show_null_labels: false
     show_null_points: false
     x_axis_label_rotation: -45
@@ -78,7 +75,6 @@
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: normal
-    hide_legend: true
     show_null_labels: false
     show_null_points: false
     x_axis_label_rotation: -45
@@ -97,7 +93,6 @@
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: normal
-    hide_legend: true
     show_null_labels: false
     show_null_points: false
     x_axis_label_rotation: -45
@@ -115,7 +110,6 @@
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: normal
-    hide_legend: true
     show_null_labels: false
     show_null_points: false
     x_axis_label_rotation: -45
@@ -134,7 +128,6 @@
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: normal
-    hide_legend: true
     show_null_labels: false
     show_null_points: false
     x_axis_label_rotation: -45
@@ -152,7 +145,6 @@
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: normal
-    hide_legend: true
     show_null_labels: false
     show_null_points: false
     x_axis_label_rotation: -45

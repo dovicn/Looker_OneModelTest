@@ -41,8 +41,20 @@
       sql: ${TABLE}.deparment
       
     - dimension: performance_rating
-      type: string
+      type: number
       sql: ${TABLE}.performance_rating
+      
+    - dimension: performance_rating_integer
+      type: number
+      sql: FLOOR(${TABLE}.performance_rating)
+      
+    - dimension: prev_performance_rating
+      type: number
+      sql: ${TABLE}.prev_perf_rating
+      
+    - dimension: prev_performance_rating_integer
+      type: number
+      sql: FLOOR(${TABLE}.prev_perf_rating)
       
     - dimension: event_reason_id
       type: string
@@ -129,8 +141,13 @@
       sql: ${TABLE}.review_type
       
     - dimension: prev_perf_rating_same_review_type
-      type: string
+      type: number
       sql: ${TABLE}.prev_perf_rating_same_review_type
+      
+    - dimension: review_difference
+      type: number
+      sql: ${performance_rating} - ${prev_perf_rating_same_review_type}
+      
 
 ### Headcount Section
     - measure: average_headcount
@@ -342,3 +359,7 @@
     - measure: review_occurrences
       type: sum
       sql: ${review_occurrence}
+    
+    - measure: improved_poor_performers
+      type: sum
+      sql: CASE WHEN ${prev_perf_rating_same_review_type} < 3.0 AND ${performance_rating} >= 3.0 THEN 1 ELSE 0 END
