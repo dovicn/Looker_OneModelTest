@@ -38,7 +38,7 @@
     
     - dimension: department
       type: string
-      sql: ${TABLE}.deparment
+      sql: ${TABLE}.department
       
     - dimension: performance_rating
       type: number

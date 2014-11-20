@@ -6,7 +6,7 @@
   filters:
   
   - name: date
-    title: "Created Date"
+    title: "Event Date"
     type: date_filter
     default_value: last 12 months
 

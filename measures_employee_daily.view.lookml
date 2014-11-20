@@ -1,7 +1,7 @@
 - view: measures_employee_daily
   derived_table:
     sql: |
-      SELECT emp.personid as person_id
+      SELECT emp.personid as personid
       , timeperiods.date AS todate
       , CAST(timeperiods.year as VARCHAR) + CAST(timeperiods.month as VARCHAR) as timeperiod
       , emp.status
@@ -45,7 +45,7 @@
       , emp.nineboxrating as ninebox_rating
       , emp.emptype as emp_type
       , emp.regtemp as reg_temp
-      , emp.fullpart as full_part
+      , emp.fullpart as fullpart
       , emp.contractor
       , emp.riskofloss as risk_of_loss
       , emp.impactofloss as impact_of_loss
@@ -111,23 +111,11 @@
   - dimension: eeojob
     sql: ${TABLE}.eeojob
 
-  - dimension_group: effdt
-    type: time
-    timeframes: [date, week, month]
-    convert_tz: false
-    sql: ${TABLE}.effdt
-
   - dimension: email
     sql: ${TABLE}.email
 
   - dimension: emptype
     sql: ${TABLE}.emptype
-
-  - dimension_group: enddt
-    type: time
-    timeframes: [date, week, month]
-    convert_tz: false
-    sql: ${TABLE}.enddt
 
   - dimension: ethnicgroup
     sql: ${TABLE}.ethnicgroup
@@ -152,11 +140,11 @@
     type: int
     sql: ${TABLE}.headcount
 
-  - dimension_group: hiredate
+  - dimension_group: hire_date
     type: time
-    timeframes: [date, week, month]
+    timeframes: [date, week, month, year]
     convert_tz: false
-    sql: ${TABLE}.hiredate
+    sql: ${TABLE}.hire_date
 
   - dimension: hourlyrate
     type: number
@@ -278,13 +266,26 @@
     type: sum
     sql: ${headcount}
 
+  - measure: total_age_daily
+    type: sum
+    sql: ${age}
+    decimals: 2
+
   - measure: average_age_daily
     type: average
-    sql: ${age}
+    sql: 1.00 * ${age}
+    decimals: 1
+
+  - measure: average_age_daily2
+    type: number
+    sql: 1.00 * sum(${age}) / sum(${headcount})
+    decimals: 1
   
   - measure: average_tenure_daily
     type: average
-    sql: 1.0 * ${organization_tenure} / 12
+    sql: (1.0 * ${organization_tenure}) / 12.0
+    decimals: 1
+    
     
   - measure: headcount_daily_male
     type: sum
@@ -312,6 +313,15 @@
     type: number
     sql: 100.00 * ${headcount_daily_female} / NULLIF(${headcount_daily}, 0)
     format: "%5.2f%%"
+  
+  - measure: birthdays_total
+    type: sum
+    sql: ${birthday_count}
+  
+  - measure: hire_anniversaries
+    type: sum
+    sql: CASE WHEN datepart(month, hire_date) = datepart(month, todate) AND datepart(day, hire_date) = datepart(day, todate) THEN 1 ELSE 0 END
+
 
   # DW - Testing some daily aggregation
 #  - measure: base_fte

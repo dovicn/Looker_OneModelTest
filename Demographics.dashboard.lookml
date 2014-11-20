@@ -2,8 +2,21 @@
   title: Demographics
   layout: tile
   tile_size: 100
+  show_applied_filters: false
+  
 
-#  filters:
+  filters:
+  - name: department_lvl_2
+    title: "Department Level 2"
+    type: suggest_filter
+    base_view: dim_org_unit
+    dimension: dim_org_unit.level2desc
+    
+  - name: country
+    title: "Country"
+    type: suggest_filter
+    base_view: dim_country
+    dimension: dim_country.level1desc
 
   elements:
 
@@ -14,12 +27,15 @@
     measures: [measures_employee_daily.headcount_daily]
     filters:
       measures_employee_daily.todate_date: today
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
     sorts: [measures_employee_daily.headcount_daily desc]
     limit: 500
     show_null_labels: false
-    width: 4
+    width: 3
     height: 2
-
+  
   - name: average_age_daily
     title: Average Age - Today
     type: single_value
@@ -27,10 +43,13 @@
     measures: [measures_employee_daily.average_age_daily]
     filters:
       measures_employee_daily.todate_date: today
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
     sorts: [measures_employee_daily.average_age_daily desc]
     limit: 500
     show_null_labels: false
-    width: 3
+    width: 2
     height: 2
     
   - name: average_tenure_daily
@@ -40,38 +59,62 @@
     measures: [measures_employee_daily.average_tenure_daily]
     filters:
       measures_employee_daily.todate_date: today
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
     sorts: [measures_employee_daily.average_tenure_daily desc]
     limit: 500
     show_null_labels: false
-    width: 3
+    width: 2
     height: 2
     
-  - name: staffing_rate_female
-    title: Female Staffing Rate
-    type: single_value
+  - name: gender_diversity_ratio
+    title: Gender Diversity Ratio
+    type: looker_pie
     base_view: measures_employee_daily
-    measures: [measures_employee_daily.staffing_rate_female]
+    dimensions: [dim_gender.level1desc]
+    measures: [measures_employee_daily.headcount_daily]
     filters:
       measures_employee_daily.todate_date: today
-    sorts: [measures_employee_daily.staffing_rate_female desc]
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
+    sorts: [measures_employee_daily.headcount_daily desc]
     limit: 500
     show_null_labels: false
     width: 3
     height: 2
-    
-  - name: staffing_rate_male
-    title: Male Staffing Rate
-    type: single_value
+
+  - name: full_part_time_ratio
+    title: Full vs Part Time
+    type: looker_pie
     base_view: measures_employee_daily
-    measures: [measures_employee_daily.staffing_rate_male]
+    dimensions: [measures_employee_daily.fullpart]
+    measures: [measures_employee_daily.headcount_daily]
     filters:
       measures_employee_daily.todate_date: today
-    sorts: [measures_employee_daily.staffing_rate_male desc]
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
+    sorts: [measures_employee_daily.headcount_daily desc]
     limit: 500
     show_null_labels: false
     width: 3
     height: 2
-  
+
+  - name: hc_department_lv2
+    title: Headcount - Today by Department
+    type: looker_donut_multiples
+    base_view: measures_employee_daily
+    dimensions: [dim_org_unit.level2desc, measures_employee_daily.todate_date]
+    pivots: [dim_org_unit.level2desc]
+    measures: [measures_employee_daily.headcount_daily]
+    filters:
+      measures_employee_daily.todate_date: today
+    sorts: [measures_employee_daily.headcount_daily desc]
+    width: 6
+    height: 4
+    
   - name: add_a_unique_name_46
     title: End of Month Headcount
     type: looker_column
@@ -80,6 +123,9 @@
     measures: [measures_base.end_of_month_headcount]
     filters:
       measures_base.todate_date: 12 months
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
     sorts: [measures_base.todate_month asc]
     limit: 500
     stacking: ''
@@ -99,6 +145,9 @@
     measures: [measures_base.staffing_rate_approaching_retirement_eligiblity]
     filters:
       measures_base.todate_date: 12 months
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
     sorts: [measures_base.todate_month asc]
     limit: 500
     show_null_labels: false
@@ -119,13 +168,16 @@
     measures: [measures_employee_daily.headcount_daily]
     filters:
       measures_employee_daily.todate_date: today
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
     sorts: [measures_employee_daily.headcount_daily desc]
     limit: 500
     show_null_labels: false
     quantize_colors: false
     map: world
     map_projection: ''
-    colors: []
+    colors: [lightgray, blue, green]
     loading: false
     width: 8
     height: 5

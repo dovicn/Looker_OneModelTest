@@ -27,6 +27,8 @@
     - join: view_employee_timeperiods_day_denormal
       foreign_key: wkfid
       
+- explore: dim_org_unit
+- explore: dim_country
 
 - explore: employee_qoh
 
