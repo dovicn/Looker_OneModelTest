@@ -1,5 +1,5 @@
 - dashboard: employee_event_anniversaries
-  title: Employee Event Anniversaries
+  title: Anniversaries
   layout: tile
   tile_size: 100
 
