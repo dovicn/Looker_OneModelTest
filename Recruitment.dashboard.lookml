@@ -13,7 +13,7 @@
   elements:
   
   - name: total_applications
-    title: Number of Applications
+    title: Number of Candidates Applied
     type: single_value
     base_view: measures_base
     measures: [measures_base.candidate_applied]
@@ -105,7 +105,7 @@
     
     
   - name: number_of_applications
-    title: Number of Applications
+    title: Number of Applications Open
     type: looker_column
     base_view: measures_base
     dimensions: [measures_base.todate_month]
@@ -124,7 +124,7 @@
     height: 4
   
   - name: number_of_candidates
-    title: Number of candidates
+    title: Number of Candidates for Open Applications
     type: looker_column
     base_view: measures_base
     dimensions: [measures_base.todate_month]
@@ -143,7 +143,7 @@
     height: 4
     
   - name: number_of_requisitions
-    title: Number of Requisitions
+    title: Number of Requisitions Open
     type: looker_column
     base_view: measures_base
     dimensions: [measures_base.todate_month]
