@@ -134,7 +134,7 @@
     x_axis_label_rotation: -45
     y_axis_labels: ['End of Month Headcount']
     hide_legend: true
-    width: 8
+    width: 7
     height: 4
 
   - name: staffing_rate_approaching_retirement_eligibility
