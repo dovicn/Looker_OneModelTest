@@ -111,6 +111,9 @@
     measures: [measures_employee_daily.headcount_daily]
     filters:
       measures_employee_daily.todate_date: today
+    listen:
+      department_lvl_2: dim_org_unit.level2desc
+      country: dim_country.level1desc
     sorts: [measures_employee_daily.headcount_daily desc]
     width: 6
     height: 4
