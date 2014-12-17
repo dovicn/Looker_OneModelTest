@@ -44,17 +44,17 @@
       type: number
       sql: ${TABLE}.performance_rating
       
-    - dimension: performance_rating_integer
-      type: number
-      sql: FLOOR(${TABLE}.performance_rating)
+    - dimension: performance_rating_dim
+      type: string
+      sql: CAST(FLOOR(${TABLE}.performance_rating) as VARCHAR(50))
       
     - dimension: prev_performance_rating
       type: number
       sql: ${TABLE}.prev_perf_rating
       
-    - dimension: prev_performance_rating_integer
-      type: number
-      sql: FLOOR(${TABLE}.prev_perf_rating)
+    - dimension: prev_performance_rating_dim
+      type: string
+      sql: CAST(FLOOR(${TABLE}.prev_perf_rating) as VARCHAR(50))
       
     - dimension: event_reason_id
       type: string

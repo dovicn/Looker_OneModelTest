@@ -62,7 +62,7 @@
       foreign_key: department
       
     - join: dim_performance_rating
-      foreign_key: performance_rating
+      foreign_key: performance_rating_dim
     
     - join: dim_event_reason
       foreign_key: event_reason_id
